@@ -337,6 +337,7 @@ paths:
           schema:
             type: string
             format: uuid
+            example: "cc01d7c2-aa54-4504-8b98-28bd730d51d8"
         - name: accountId
           in: query
           description: Filter by account ID
@@ -370,6 +371,7 @@ paths:
                   summary: Example response of contact list
                   value:
                     - id: "a1234567-89b0-12d3-a456-426614174000"
+                      contactId: "cc01d7c2-aa54-4504-8b98-28bd730d51d8"
                       accountId: "0017Q000009ZWn6QAG"
                       contactRole: "Employee"
                       creationDateTime: "2022-12-05T11:23:56.724Z"
@@ -402,6 +404,7 @@ paths:
           schema:
             type: string
             format: uuid
+            example: "cc01d7c2-aa54-4504-8b98-28bd730d51d8"
       requestBody:
         required: true
         content:
@@ -412,6 +415,7 @@ paths:
               default:
                 summary: Example request to create a contact role
                 value:
+                  contactId: "cc01d7c2-aa54-4504-8b98-28bd730d51d8"
                   accountId: "0017Q000009ZWn6QAG"
                   contactRole: "Employee"
       responses:
@@ -426,6 +430,7 @@ paths:
                   summary: Example response of contact role creation
                   value:
                     id: "a1234567-89b0-12d3-a456-426614174000"
+                    contactId: "cc01d7c2-aa54-4504-8b98-28bd730d51d8"
                     accountId: "0017Q000009ZWn6QAG"
                     contactRole: "Employee"
                     creationDateTime: "2022-12-05T11:23:56.724Z"
@@ -459,12 +464,14 @@ paths:
           schema:
             type: string
             format: uuid
+            example: "cc01d7c2-aa54-4504-8b98-28bd730d51d8"
         - name: roleId
           in: path
           required: true
           schema:
             type: string
             format: uuid
+            example: "a1234567-89b0-12d3-a456-426614174000"
       responses:
         '200':
           description: A single contact
@@ -477,6 +484,7 @@ paths:
                   summary: Example response of contact role retrieval
                   value:
                     id: "a1234567-89b0-12d3-a456-426614174000"
+                    contactId: "cc01d7c2-aa54-4504-8b98-28bd730d51d8"
                     accountId: "0017Q000009ZWn6QAG"
                     contactRole: "Employee"
                     creationDateTime: "2022-12-05T11:23:56.724Z"
@@ -511,12 +519,14 @@ paths:
           schema:
             type: string
             format: uuid
+            example: "cc01d7c2-aa54-4504-8b98-28bd730d51d8"
         - name: roleId
           in: path
           required: true
           schema:
             type: string
             format: uuid
+            example: "a1234567-89b0-12d3-a456-426614174000"
       requestBody:
         required: true
         content:
@@ -528,6 +538,7 @@ paths:
                 summary: Example request to update a contact role
                 value:
                   id: "a1234567-89b0-12d3-a456-426614174000"
+                  contactId: "cc01d7c2-aa54-4504-8b98-28bd730d51d8"
                   accountId: "0017Q000009ZWn6QAG"
                   contactRole: "Employee"
       responses:
@@ -542,6 +553,7 @@ paths:
                   summary: Example response of contact role update
                   value:
                     id: "a1234567-89b0-12d3-a456-426614174000"
+                    contactId: "cc01d7c2-aa54-4504-8b98-28bd730d51d8"
                     accountId: "0017Q000009ZWn6QAG"
                     contactRole: "Employee"
                     creationDateTime: "2022-12-05T11:23:56.724Z"
@@ -576,12 +588,14 @@ paths:
           schema:
             type: string
             format: uuid
+            example: "cc01d7c2-aa54-4504-8b98-28bd730d51d8"
         - name: roleId
           in: path
           required: true
           schema:
             type: string
             format: uuid
+            example: "a1234567-89b0-12d3-a456-426614174000"
       responses:
         '204':
           description: No content (successful deletion)
@@ -649,7 +663,7 @@ components:
           - Miss
           - Dr.
           - Prof.
-          example: "Mr"
+          example: "Mr."
         firstName:
           type: string
           description: The first name of the contact.
@@ -703,6 +717,12 @@ components:
           format: uuid
           description: Unique identifier for the contact role.
           example: "a1234567-89b0-12d3-a456-426614174000"
+        contactId:
+          type: string
+          minLength: 36
+          maxLength: 36
+          description: The ID of the contact.
+          example: "cc01d7c2-aa54-4504-8b98-28bd730d51d8"
         accountId:
           type: string
           minLength: 18

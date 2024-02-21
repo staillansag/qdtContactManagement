@@ -1,6 +1,6 @@
 CREATE TABLE contacts (
     id VARCHAR(36) PRIMARY KEY,
-    salutation CHAR(5),
+    salutation VARCHAR(5),
     first_name VARCHAR(100) NOT NULL,
     middle_name VARCHAR(100) NOT NULL,
     last_name VARCHAR(100) NOT NULL,

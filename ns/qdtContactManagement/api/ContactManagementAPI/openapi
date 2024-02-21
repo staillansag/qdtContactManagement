@@ -700,7 +700,7 @@ components:
         salutation:
           type: string
           description: The contact salutation.
-          example: Mr
+          example: Mr.
           enum:
           - Mr.
           - Mrs.
@@ -761,6 +761,12 @@ components:
           description: Unique identifier for the contact role.
           format: uuid
           example: a1234567-89b0-12d3-a456-426614174000
+        contactId:
+          maxLength: 36
+          minLength: 36
+          type: string
+          description: The ID of the contact.
+          example: cc01d7c2-aa54-4504-8b98-28bd730d51d8
         accountId:
           maxLength: 18
           minLength: 18
