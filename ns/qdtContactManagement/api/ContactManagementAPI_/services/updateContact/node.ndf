@@ -12,6 +12,7 @@
       <value name="field_type">record</value>
       <value name="field_is_jsonSchema">true</value>
       <value name="field_dim">0</value>
+      <value name="wrapper_type">IData</value>
       <array name="field_content_type" type="record" depth="1">
         <record javaclass="com.wm.util.Values">
           <record name="extendedProperties" javaclass="com.wm.util.Values">
@@ -29,15 +30,23 @@
         </record>
       </array>
       <value name="nillable">true</value>
+      <Boolean name="readOnly">false</Boolean>
+      <Boolean name="writeOnly">false</Boolean>
       <array name="rec_fields" type="record" depth="1">
         <record javaclass="com.wm.util.Values">
           <value name="node_type">record</value>
           <value name="node_subtype">unknown</value>
+          <value name="node_comment"></value>
+          <record name="node_hints" javaclass="com.wm.util.Values">
+            <value name="field_largerEditor">false</value>
+            <value name="field_password">false</value>
+          </record>
           <value name="is_public">false</value>
           <value name="field_name">params</value>
           <value name="field_type">record</value>
           <value name="field_dim">0</value>
           <value name="field_opt">true</value>
+          <value name="wrapper_type">IData</value>
           <value name="nillable">true</value>
           <value name="form_qualified">false</value>
           <value name="is_global">false</value>
@@ -89,6 +98,8 @@
                     </record>
                   </array>
                   <value name="nillable">false</value>
+                  <Boolean name="readOnly">false</Boolean>
+                  <Boolean name="writeOnly">false</Boolean>
                 </record>
               </array>
               <value name="modifiable">true</value>
@@ -99,22 +110,33 @@
         <record javaclass="com.wm.util.Values">
           <value name="node_type">record</value>
           <value name="node_subtype">unknown</value>
+          <value name="node_comment"></value>
+          <record name="node_hints" javaclass="com.wm.util.Values">
+            <value name="field_largerEditor">false</value>
+            <value name="field_password">false</value>
+          </record>
           <value name="is_public">false</value>
           <value name="field_name">requestBody</value>
           <value name="field_type">record</value>
           <value name="field_is_jsonSchema">true</value>
           <value name="field_dim">0</value>
+          <value name="wrapper_type">IData</value>
           <array name="rec_fields" type="record" depth="1">
             <record javaclass="com.wm.util.Values">
               <value name="node_type">record</value>
               <value name="node_subtype">unknown</value>
               <value name="node_comment">application/json</value>
+              <record name="node_hints" javaclass="com.wm.util.Values">
+                <value name="field_largerEditor">false</value>
+                <value name="field_password">false</value>
+              </record>
               <value name="is_public">false</value>
               <value name="field_name">Contact</value>
               <value name="field_type">recref</value>
               <value name="field_is_jsonSchema">true</value>
               <value name="field_dim">0</value>
               <value name="field_opt">true</value>
+              <value name="wrapper_type">IData</value>
               <array name="field_content_type" type="record" depth="1">
                 <record javaclass="com.wm.util.Values">
                   <record name="type" javaclass="com.wm.util.Values">
@@ -137,6 +159,8 @@
                 </record>
               </array>
               <value name="nillable">true</value>
+              <Boolean name="readOnly">false</Boolean>
+              <Boolean name="writeOnly">false</Boolean>
               <value name="modifiable">true</value>
               <value name="rec_ref">qdtContactManagement.api.ContactManagementAPI_.docTypes:Contact</value>
             </record>
@@ -153,6 +177,7 @@
       <value name="field_type">record</value>
       <value name="field_is_jsonSchema">true</value>
       <value name="field_dim">0</value>
+      <value name="wrapper_type">IData</value>
       <array name="field_content_type" type="record" depth="1">
         <record javaclass="com.wm.util.Values">
           <record name="extendedProperties" javaclass="com.wm.util.Values">
@@ -170,16 +195,24 @@
         </record>
       </array>
       <value name="nillable">true</value>
+      <Boolean name="readOnly">false</Boolean>
+      <Boolean name="writeOnly">false</Boolean>
       <array name="rec_fields" type="record" depth="1">
         <record javaclass="com.wm.util.Values">
           <value name="node_type">record</value>
           <value name="node_subtype">unknown</value>
+          <value name="node_comment"></value>
+          <record name="node_hints" javaclass="com.wm.util.Values">
+            <value name="field_largerEditor">false</value>
+            <value name="field_password">false</value>
+          </record>
           <value name="is_public">false</value>
           <value name="field_name">200</value>
           <value name="field_type">record</value>
           <value name="field_is_jsonSchema">true</value>
           <value name="field_dim">0</value>
           <value name="field_opt">true</value>
+          <value name="wrapper_type">IData</value>
           <array name="rec_fields" type="record" depth="1">
             <record javaclass="com.wm.util.Values">
               <value name="node_type">record</value>
@@ -213,6 +246,8 @@
                 </record>
               </array>
               <value name="nillable">true</value>
+              <Boolean name="readOnly">false</Boolean>
+              <Boolean name="writeOnly">false</Boolean>
               <value name="modifiable">true</value>
               <value name="rec_ref">qdtContactManagement.api.ContactManagementAPI_.docTypes:Contact</value>
             </record>
@@ -222,12 +257,18 @@
         <record javaclass="com.wm.util.Values">
           <value name="node_type">record</value>
           <value name="node_subtype">unknown</value>
+          <value name="node_comment"></value>
+          <record name="node_hints" javaclass="com.wm.util.Values">
+            <value name="field_largerEditor">false</value>
+            <value name="field_password">false</value>
+          </record>
           <value name="is_public">false</value>
           <value name="field_name">400</value>
           <value name="field_type">record</value>
           <value name="field_is_jsonSchema">true</value>
           <value name="field_dim">0</value>
           <value name="field_opt">true</value>
+          <value name="wrapper_type">IData</value>
           <array name="rec_fields" type="record" depth="1">
             <record javaclass="com.wm.util.Values">
               <value name="node_type">record</value>
@@ -261,6 +302,8 @@
                 </record>
               </array>
               <value name="nillable">true</value>
+              <Boolean name="readOnly">false</Boolean>
+              <Boolean name="writeOnly">false</Boolean>
               <value name="modifiable">true</value>
               <value name="rec_ref">qdtContactManagement.api.ContactManagementAPI_.docTypes:Error</value>
             </record>
@@ -270,12 +313,18 @@
         <record javaclass="com.wm.util.Values">
           <value name="node_type">record</value>
           <value name="node_subtype">unknown</value>
+          <value name="node_comment"></value>
+          <record name="node_hints" javaclass="com.wm.util.Values">
+            <value name="field_largerEditor">false</value>
+            <value name="field_password">false</value>
+          </record>
           <value name="is_public">false</value>
           <value name="field_name">500</value>
           <value name="field_type">record</value>
           <value name="field_is_jsonSchema">true</value>
           <value name="field_dim">0</value>
           <value name="field_opt">true</value>
+          <value name="wrapper_type">IData</value>
           <array name="rec_fields" type="record" depth="1">
             <record javaclass="com.wm.util.Values">
               <value name="node_type">record</value>
@@ -309,6 +358,8 @@
                 </record>
               </array>
               <value name="nillable">true</value>
+              <Boolean name="readOnly">false</Boolean>
+              <Boolean name="writeOnly">false</Boolean>
               <value name="modifiable">true</value>
               <value name="rec_ref">qdtContactManagement.api.ContactManagementAPI_.docTypes:Error</value>
             </record>
@@ -319,6 +370,7 @@
       <value name="modifiable">true</value>
     </record>
   </record>
+  <value name="node_comment"></value>
   <value name="stateless">yes</value>
   <value name="caching">no</value>
   <value name="prefetch">no</value>
@@ -341,6 +393,21 @@
     <value name="stopExecution">false</value>
     <value name="onError">true</value>
   </record>
+  <record name="circuitbreakersettings" javaclass="com.wm.util.Values">
+    <value name="enabled">false</value>
+    <value name="failureEvent">1</value>
+    <value name="timeoutPeriod">60</value>
+    <value name="failureThreshold">5</value>
+    <value name="failurePeriod">60</value>
+    <value name="openAction">1</value>
+    <value name="serviceToInvoke"></value>
+    <value name="resetPeriod">300</value>
+    <value name="cancelThreadOnTimeout">false</value>
+  </record>
+  <record name="concurrentrequestlimitsettings" javaclass="com.wm.util.Values">
+    <value name="maxConcurrentRequests">20</value>
+    <value name="concurrentRequestLimitEnabled">false</value>
+  </record>
   <array name="allowedHTTPMethods" type="value" depth="1">
     <value>TRACE</value>
     <value>HEAD</value>
@@ -351,7 +418,7 @@
     <value>PUT</value>
     <value>PATCH</value>
   </array>
-  <value name="pipeline_option">0</value>
+  <value name="pipeline_option">1</value>
   <value name="originURI">file://C:\SAG\IntegrationServer\packages\qdtContactManagement\resources\api\ContactManagementAPI.yml</value>
   <value name="modifiable">true</value>
   <value name="is_public">false</value>
