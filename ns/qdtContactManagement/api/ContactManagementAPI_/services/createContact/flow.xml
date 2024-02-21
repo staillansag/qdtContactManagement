@@ -10426,9 +10426,6 @@
 
 <MAPDELETE FIELD="/message;1;0">
 </MAPDELETE>
-
-<MAPDELETE FIELD="/jsonString;1;0">
-</MAPDELETE>
 </MAP>
 </INVOKE>
 
@@ -10625,7 +10622,7 @@
         <value name="modifiable">true</value>
       </record>
       <record javaclass="com.wm.util.Values">
-        <value name="node_type">unknown</value>
+        <value name="node_type">field</value>
         <value name="node_subtype">unknown</value>
         <value name="is_public">false</value>
         <value name="field_name">jsonString</value>
@@ -10837,7 +10834,7 @@
         <value name="modifiable">true</value>
       </record>
       <record javaclass="com.wm.util.Values">
-        <value name="node_type">unknown</value>
+        <value name="node_type">field</value>
         <value name="node_subtype">unknown</value>
         <value name="is_public">false</value>
         <value name="field_name">jsonString</value>

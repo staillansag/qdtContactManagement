@@ -31,7 +31,7 @@ paths:
         explode: true
         schema:
           type: string
-        example: John
+          example: John
       - name: lastUpdateBefore
         in: query
         description: Filter by contacts last updated before the specified date
@@ -41,7 +41,7 @@ paths:
         schema:
           type: string
           format: date-time
-        example: 2022-12-01T00:00:00Z
+          example: 2022-12-01T00:00:00Z
       - name: lastUpdateAfter
         in: query
         description: Filter by contacts last updated after the specified date
@@ -51,10 +51,10 @@ paths:
         schema:
           type: string
           format: date-time
-        example: 2022-11-01T00:00:00Z
+          example: 2022-11-01T00:00:00Z
       - name: limit
         in: query
-        description: Maximum number of contacts to return
+        description: Maximum number of contacts to return in a single call
         required: false
         style: form
         explode: true
@@ -62,7 +62,19 @@ paths:
           maximum: 2000
           minimum: 200
           type: integer
-        example: 200
+          example: 200
+          default: 200
+      - name: offset
+        in: query
+        description: Pagination offset
+        required: false
+        style: form
+        explode: true
+        schema:
+          minimum: 0
+          type: integer
+          example: 200
+          default: 0
       - name: sortBy
         in: query
         description: Attribute to sort the contacts by
@@ -71,11 +83,12 @@ paths:
         explode: true
         schema:
           type: string
+          example: lastName
+          default: id
           enum:
           - id
           - lastName
           - lastUpdateDateTime
-        example: lastName
       - name: sortOrder
         in: query
         description: Sort order for the results
@@ -84,31 +97,35 @@ paths:
         explode: true
         schema:
           type: string
+          example: ascending
+          default: ascending
           enum:
           - ascending
           - descending
-        example: ascending
       responses:
         "200":
           description: A list of contacts
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Contact'
+                $ref: '#/components/schemas/PaginatedContacts'
               examples:
                 default:
                   summary: Example response of contact list
                   value:
-                  - id: cc01d7c2-aa54-4504-8b98-28bd730d51d8
-                    firstName: John
-                    middleName: Robert
-                    lastName: Doe
-                    email: john.doe@example.com
-                    phoneNumber: 123-456-7890
-                    creationDateTime: 2022-12-05T11:23:56.724Z
-                    lastUpdateDateTime: 2022-12-05T11:23:56.724Z
+                    itemCount: 1
+                    hasMore: false
+                    contacts:
+                    - id: cc01d7c2-aa54-4504-8b98-28bd730d51d8
+                      salutation: Mr.
+                      firstName: John
+                      middleName: Robert
+                      lastName: Doe
+                      birthDate: 1997-12-15
+                      email: john.doe@example.com
+                      phoneNumber: 123-456-7890
+                      creationDateTime: 2022-12-05T11:23:56.724Z
+                      lastUpdateDateTime: 2022-12-05T11:23:56.724Z
         "400":
           description: Bad request
           content:
@@ -139,9 +156,11 @@ paths:
               default:
                 summary: Example request to create a contact
                 value:
+                  salutation: Mr.
                   firstName: John
                   middleName: Robert
                   lastName: Doe
+                  birthDate: 1997-12-15
                   email: john.doe@example.com
                   phoneNumber: 123-456-7890
         required: true
@@ -157,10 +176,13 @@ paths:
                   summary: Example response of contact creation
                   value:
                     id: cc01d7c2-aa54-4504-8b98-28bd730d51d8
-                    first_name: John
+                    salutation: Mr.
+                    firstName: John
                     middleName: Robert
-                    last_name: Doe
+                    lastName: Doe
+                    birthDate: 1997-12-15
                     email: john.doe@example.com
+                    phoneNumber: 123-456-7890
                     creationDateTime: 2022-12-05T11:23:56.724Z
                     lastUpdateDateTime: 2022-12-05T11:23:56.724Z
         "400":
@@ -206,10 +228,13 @@ paths:
                   summary: Example response of contact retrieval
                   value:
                     id: cc01d7c2-aa54-4504-8b98-28bd730d51d8
-                    first_name: John
+                    salutation: Mr.
+                    firstName: John
                     middleName: Robert
-                    last_name: Doe
+                    lastName: Doe
+                    birthDate: 1997-12-15
                     email: john.doe@example.com
+                    phoneNumber: 123-456-7890
                     creationDateTime: 2022-12-05T11:23:56.724Z
                     lastUpdateDateTime: 2022-12-05T11:23:56.724Z
         "400":
@@ -254,10 +279,13 @@ paths:
                 summary: Example request to update a contact
                 value:
                   id: cc01d7c2-aa54-4504-8b98-28bd730d51d8
-                  first_name: John
+                  salutation: Mr.
+                  firstName: John
                   middleName: Robert
-                  last_name: Doe
+                  lastName: Doe
+                  birthDate: 1997-12-15
                   email: john.doe@example.com
+                  phoneNumber: 123-456-7890
         required: true
       responses:
         "200":
@@ -271,10 +299,13 @@ paths:
                   summary: Example response of contact update
                   value:
                     id: cc01d7c2-aa54-4504-8b98-28bd730d51d8
-                    first_name: John
+                    salutation: Mr.
+                    firstName: John
                     middleName: Robert
-                    last_name: Doe
+                    lastName: Doe
+                    birthDate: 1997-12-15
                     email: john.doe@example.com
+                    phoneNumber: 123-456-7890
                     creationDateTime: 2022-12-05T11:23:56.724Z
                     lastUpdateDateTime: 2022-12-05T11:23:56.724Z
         "400":
@@ -633,6 +664,27 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
+    PaginatedContacts:
+      required:
+      - itemCount
+      type: object
+      properties:
+        itemCount:
+          type: integer
+          description: The total number of contacts available.
+          example: 2
+        hasMore:
+          type: boolean
+          description: Indicates if there are more contacts to load.
+          example: false
+          default: false
+        accounts:
+          maxItems: 2000
+          minItems: 0
+          type: array
+          description: A list of contacts.
+          items:
+            $ref: '#/components/schemas/Contact'
     Contact:
       required:
       - email
