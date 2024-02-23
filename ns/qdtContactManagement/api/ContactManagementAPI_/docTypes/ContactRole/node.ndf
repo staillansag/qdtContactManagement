@@ -26,8 +26,8 @@
         <record name="required" javaclass="com.wm.util.Values">
           <value name="key">required</value>
           <array name="value" type="value" depth="1">
-            <value>account_id</value>
-            <value>contact_role</value>
+            <value>accountId</value>
+            <value>contactRole</value>
           </array>
           <value name="type">LIST</value>
         </record>
@@ -144,7 +144,7 @@
         <value name="field_name">accountId</value>
         <value name="field_type">string</value>
         <value name="field_dim">0</value>
-        <value name="field_opt">true</value>
+        <null name="field_opt"/>
         <value name="field_is_jsonSchema">true</value>
         <null name="title"/>
         <value name="description">The ID of the account associated with the contact.</value>
@@ -191,7 +191,7 @@
         <value name="field_name">contactRole</value>
         <value name="field_type">string</value>
         <value name="field_dim">0</value>
-        <value name="field_opt">true</value>
+        <null name="field_opt"/>
         <value name="field_is_jsonSchema">true</value>
         <null name="title"/>
         <value name="description">The role of the contact within the account.</value>

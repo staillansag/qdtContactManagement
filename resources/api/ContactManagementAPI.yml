@@ -85,7 +85,7 @@ paths:
                     hasMore: false
                     contacts: 
                       - id: "cc01d7c2-aa54-4504-8b98-28bd730d51d8"
-                        salutation: "Mr."
+                        salutation: "Mr"
                         firstName: "John"
                         middleName: "Robert"
                         lastName: "Doe"
@@ -126,7 +126,7 @@ paths:
               default:
                 summary: Example request to create a contact
                 value:
-                  salutation: "Mr."
+                  salutation: "Mr"
                   firstName: "John"
                   middleName: "Robert"
                   lastName: "Doe"
@@ -145,7 +145,7 @@ paths:
                   summary: Example response of contact creation
                   value:
                     id: "cc01d7c2-aa54-4504-8b98-28bd730d51d8"
-                    salutation: "Mr."
+                    salutation: "Mr"
                     firstName: "John"
                     middleName: "Robert"
                     lastName: "Doe"
@@ -195,7 +195,7 @@ paths:
                   summary: Example response of contact retrieval
                   value:
                     id: "cc01d7c2-aa54-4504-8b98-28bd730d51d8"
-                    salutation: "Mr."
+                    salutation: "Mr"
                     firstName: "John"
                     middleName: "Robert"
                     lastName: "Doe"
@@ -245,7 +245,7 @@ paths:
                 summary: Example request to update a contact
                 value:
                   id: "cc01d7c2-aa54-4504-8b98-28bd730d51d8"
-                  salutation: "Mr."
+                  salutation: "Mr"
                   firstName: "John"
                   middleName: "Robert"
                   lastName: "Doe"
@@ -264,7 +264,7 @@ paths:
                   summary: Example response of contact update
                   value:
                     id: "cc01d7c2-aa54-4504-8b98-28bd730d51d8"
-                    salutation: "Mr."
+                    salutation: "Mr"
                     firstName: "John"
                     middleName: "Robert"
                     lastName: "Doe"
@@ -640,7 +640,7 @@ components:
           description: Indicates if there are more contacts to load.
           default: false
           example: false
-        accounts:
+        contacts:
           type: array
           description: A list of contacts.
           items:
@@ -663,13 +663,13 @@ components:
           type: string
           description: The contact salutation.
           enum:
-          - Mr.
-          - Mrs.
-          - Ms.
+          - Mr
+          - Mrs
+          - Ms
           - Miss
-          - Dr.
-          - Prof.
-          example: "Mr."
+          - Dr
+          - Prof
+          example: "Mr"
         firstName:
           type: string
           description: The first name of the contact.
@@ -715,8 +715,8 @@ components:
     ContactRole:
       type: object
       required:
-        - account_id
-        - contact_role
+        - accountId
+        - contactRole
       properties:
         id:
           type: string

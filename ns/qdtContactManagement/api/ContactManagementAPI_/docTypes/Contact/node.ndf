@@ -114,12 +114,12 @@
             <record name="enumProperty" javaclass="com.wm.util.Values">
               <value name="key">enumProperty</value>
               <array name="value" type="value" depth="1">
-                <value>Mr.</value>
-                <value>Mrs.</value>
-                <value>Ms.</value>
+                <value>Mr</value>
+                <value>Mrs</value>
+                <value>Ms</value>
                 <value>Miss</value>
-                <value>Dr.</value>
-                <value>Prof.</value>
+                <value>Dr</value>
+                <value>Prof</value>
               </array>
               <value name="type">LIST</value>
             </record>
