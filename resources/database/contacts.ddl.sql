@@ -2,7 +2,7 @@ CREATE TABLE contacts (
     id VARCHAR(36) PRIMARY KEY,
     salutation VARCHAR(5),
     first_name VARCHAR(100) NOT NULL,
-    middle_name VARCHAR(100) NOT NULL,
+    middle_name VARCHAR(100),
     last_name VARCHAR(100) NOT NULL,
     birth_date DATE, 
     email VARCHAR(100),
