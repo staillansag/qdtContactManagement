@@ -1583,7 +1583,7 @@
 					]
 				},
 				{
-					"name": "Get contact",
+					"name": "getContact",
 					"item": [
 						{
 							"name": "Not found",
@@ -1625,6 +1625,577 @@
 										{
 											"key": "contactId",
 											"value": "b8b13648-ac2a-4c5b-b1f4-06d476e2e6a2"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "listContacts",
+					"item": [
+						{
+							"name": "Invalid limit",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {",
+											"    pm.response.to.have.status(404);",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/contacts?limit=-1",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"contacts"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "-1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Invalid limit 2",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {",
+											"    pm.response.to.have.status(404);",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/contacts?limit=10000",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"contacts"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "10000"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Invalid offset",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {",
+											"    pm.response.to.have.status(404);",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/contacts?offset=-10",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"contacts"
+									],
+									"query": [
+										{
+											"key": "offset",
+											"value": "-10"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Invalid sortBy",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {",
+											"    pm.response.to.have.status(404);",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/contacts?sortBy=abcd",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"contacts"
+									],
+									"query": [
+										{
+											"key": "sortBy",
+											"value": "abcd"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Invalid sortOrder",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {",
+											"    pm.response.to.have.status(404);",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/contacts?sortOrder=abcd",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"contacts"
+									],
+									"query": [
+										{
+											"key": "sortOrder",
+											"value": "abcd"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "updateContact",
+					"item": [
+						{
+							"name": "Invalid salutation",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {",
+											"    pm.response.to.have.status(404);",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id\": \"cc01d7c2-aa54-4504-8b98-28bd730d51d8\",\n  \"salutation\": \"abcd\",\n  \"firstName\": \"John\",\n  \"middleName\": \"Robert\",\n  \"lastName\": \"Doe\",\n  \"birthDate\": \"1997-12-15\",\n  \"email\": \"john.doe@example.com\",\n  \"phoneNumber\": \"123-456-7890\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/contacts/:contactId",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"contacts",
+										":contactId"
+									],
+									"variable": [
+										{
+											"key": "contactId",
+											"value": "{{contactId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Missing firstName",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {",
+											"    pm.response.to.have.status(404);",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id\": \"cc01d7c2-aa54-4504-8b98-28bd730d51d8\",\n  \"salutation\": \"Mr\",\n  \"middleName\": \"Robert\",\n  \"lastName\": \"Doe\",\n  \"birthDate\": \"1997-12-15\",\n  \"email\": \"john.doe@example.com\",\n  \"phoneNumber\": \"123-456-7890\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/contacts/:contactId",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"contacts",
+										":contactId"
+									],
+									"variable": [
+										{
+											"key": "contactId",
+											"value": "{{contactId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Missing lastName",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {",
+											"    pm.response.to.have.status(404);",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id\": \"cc01d7c2-aa54-4504-8b98-28bd730d51d8\",\n  \"salutation\": \"Mr\",\n  \"firstName\": \"John\",\n  \"middleName\": \"Robert\",\n  \"birthDate\": \"1997-12-15\",\n  \"email\": \"john.doe@example.com\",\n  \"phoneNumber\": \"123-456-7890\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/contacts/:contactId",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"contacts",
+										":contactId"
+									],
+									"variable": [
+										{
+											"key": "contactId",
+											"value": "{{contactId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Invalid birthDate",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {",
+											"    pm.response.to.have.status(404);",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id\": \"cc01d7c2-aa54-4504-8b98-28bd730d51d8\",\n  \"salutation\": \"Mr\",\n  \"firstName\": \"John\",\n  \"middleName\": \"Robert\",\n  \"lastName\": \"Doe\",\n  \"birthDate\": \"1997-12-40\",\n  \"email\": \"john.doe@example.com\",\n  \"phoneNumber\": \"123-456-7890\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/contacts/:contactId",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"contacts",
+										":contactId"
+									],
+									"variable": [
+										{
+											"key": "contactId",
+											"value": "{{contactId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Missing email",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {",
+											"    pm.response.to.have.status(404);",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id\": \"cc01d7c2-aa54-4504-8b98-28bd730d51d8\",\n  \"salutation\": \"Mr\",\n  \"firstName\": \"John\",\n  \"middleName\": \"Robert\",\n  \"lastName\": \"Doe\",\n  \"birthDate\": \"1997-12-15\",\n  \"phoneNumber\": \"123-456-7890\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/contacts/:contactId",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"contacts",
+										":contactId"
+									],
+									"variable": [
+										{
+											"key": "contactId",
+											"value": "{{contactId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "deleteContact",
+					"item": [
+						{
+							"name": "Not found",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 204\", function () {",
+											"    pm.response.to.have.status(204);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/contacts/:contactId",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"contacts",
+										":contactId"
+									],
+									"variable": [
+										{
+											"key": "contactId",
+											"value": "ae226544-6d55-4827-923b-91667bebfc60s"
 										}
 									]
 								}
@@ -1910,6 +2481,58 @@
 										{
 											"key": "contactId",
 											"value": "{{contactId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "listContactRoles",
+					"item": [
+						{
+							"name": "Contact not found",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {",
+											"    pm.response.to.have.status(404);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/contacts/:contactId/roles",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"contacts",
+										":contactId",
+										"roles"
+									],
+									"variable": [
+										{
+											"key": "contactId",
+											"value": "ae226544-6d55-4827-923b-91667bebfc60s"
 										}
 									]
 								}
