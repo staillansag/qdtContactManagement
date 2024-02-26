@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   title: Contacts and Contact Roles API
-  description: API for managing contacts and their roles in accounts, with address details.
+  description: An API for managing contacts and their roles in accounts.
   version: "1.0"
 paths:
   /contacts:
@@ -715,6 +715,7 @@ components:
     ContactRole:
       type: object
       required:
+        - contactId
         - accountId
         - contactRole
       properties:

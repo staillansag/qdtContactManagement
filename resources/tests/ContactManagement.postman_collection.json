@@ -240,6 +240,10 @@
 									"    }",
 									"}",
 									"",
+									"pm.test(\"One contact found\", function () {",
+									"    pm.expect(responseJson.itemCount).to.eql(1);",
+									"});",
+									"",
 									"pm.test(\"id matches\", function () {",
 									"    pm.expect(checkNullOrEmpty(pm.collectionVariables.get(\"contactId\"), targetContact.id)).to.be.true;",
 									"});",
@@ -1233,19 +1237,701 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Errors",
+			"item": [
+				{
+					"name": "createContact",
+					"item": [
+						{
+							"name": "Missing lastName",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"salutation\": \"Mr\",\n    \"firstName\": \"John\",\n    \"middleName\": \"Robert\",\n    \"birthDate\": \"1997-12-15\",\n    \"email\": \"john.doe@example.com\",\n    \"phoneNumber\": \"123-456-7890\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/contacts",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"contacts"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Empty lastName",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"salutation\": \"Mr\",\n    \"lastName\": \"\",\n    \"firstName\": \"John\",\n    \"middleName\": \"Robert\",\n    \"birthDate\": \"1997-12-15\",\n    \"email\": \"john.doe@example.com\",\n    \"phoneNumber\": \"123-456-7890\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/contacts",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"contacts"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Missing firstName",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"salutation\": \"Mr\",\n    \"lastName\": \"Doe\",\n    \"middleName\": \"Robert\",\n    \"birthDate\": \"1997-12-15\",\n    \"email\": \"john.doe@example.com\",\n    \"phoneNumber\": \"123-456-7890\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/contacts",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"contacts"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Empty firstName",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"salutation\": \"Mr\",\n    \"lastName\": \"Doe\",\n    \"firstName\": \"\",\n    \"middleName\": \"Robert\",\n    \"birthDate\": \"1997-12-15\",\n    \"email\": \"john.doe@example.com\",\n    \"phoneNumber\": \"123-456-7890\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/contacts",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"contacts"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Invalid salutation",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"salutation\": \"abcd\",\n    \"lastName\": \"Doe\",\n    \"firstName\": \"John\",\n    \"middleName\": \"Robert\",\n    \"birthDate\": \"1997-12-15\",\n    \"email\": \"john.doe@example.com\",\n    \"phoneNumber\": \"123-456-7890\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/contacts",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"contacts"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Invalid birthDate",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"salutation\": \"Mr\",\n    \"lastName\": \"\",\n    \"firstName\": \"John\",\n    \"middleName\": \"Robert\",\n    \"birthDate\": \"1997/12/15\",\n    \"email\": \"john.doe@example.com\",\n    \"phoneNumber\": \"123-456-7890\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/contacts",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"contacts"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Missing email",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"salutation\": \"Mr\",\n    \"lastName\": \"Doe\",\n    \"firstName\": \"John\",\n    \"middleName\": \"Robert\",\n    \"birthDate\": \"1997-12-15\",\n    \"phoneNumber\": \"123-456-7890\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/contacts",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"contacts"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Get contact",
+					"item": [
+						{
+							"name": "Not found",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {",
+											"    pm.response.to.have.status(404);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/contacts/:contactId",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"contacts",
+										":contactId"
+									],
+									"variable": [
+										{
+											"key": "contactId",
+											"value": "b8b13648-ac2a-4c5b-b1f4-06d476e2e6a2"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "createContactRole",
+					"item": [
+						{
+							"name": "Missing contactId",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {",
+											"    pm.response.to.have.status(404);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"accountId\": \"0017Q000009ZWn6QAG\",\n  \"contactRole\": \"Employee\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/contacts/:contactId/roles",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"contacts",
+										":contactId",
+										"roles"
+									],
+									"variable": [
+										{
+											"key": "contactId",
+											"value": "{{contactId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Missing accountId",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {",
+											"    pm.response.to.have.status(404);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"contactId\": \"cc01d7c2-aa54-4504-8b98-28bd730d51d8\",\n  \"contactRole\": \"Employee\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/contacts/:contactId/roles",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"contacts",
+										":contactId",
+										"roles"
+									],
+									"variable": [
+										{
+											"key": "contactId",
+											"value": "{{contactId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Invalid accountId",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {",
+											"    pm.response.to.have.status(404);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"contactId\": \"cc01d7c2-aa54-4504-8b98-28bd730d51d8\",\n  \"accountId\": \"abcd\",\n  \"contactRole\": \"Employee\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/contacts/:contactId/roles",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"contacts",
+										":contactId",
+										"roles"
+									],
+									"variable": [
+										{
+											"key": "contactId",
+											"value": "{{contactId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Missing contactRole",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {",
+											"    pm.response.to.have.status(404);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"contactId\": \"cc01d7c2-aa54-4504-8b98-28bd730d51d8\",\n  \"accountId\": \"0017Q000009ZWn6QAG\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/contacts/:contactId/roles",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"contacts",
+										":contactId",
+										"roles"
+									],
+									"variable": [
+										{
+											"key": "contactId",
+											"value": "{{contactId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Invalid contactRole",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {",
+											"    pm.response.to.have.status(404);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"contactId\": \"cc01d7c2-aa54-4504-8b98-28bd730d51d8\",\n  \"accountId\": \"0017Q000009ZWn6QAG\",\n  \"contactRole\": \"abcd\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/contacts/:contactId/roles",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"contacts",
+										":contactId",
+										"roles"
+									],
+									"variable": [
+										{
+											"key": "contactId",
+											"value": "{{contactId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
 		}
 	],
 	"auth": {
-		"type": "apikey",
-		"apikey": [
+		"type": "basic",
+		"basic": [
 			{
-				"key": "value",
-				"value": "{{apiKey}}",
+				"key": "password",
+				"value": "{{password}}",
 				"type": "string"
 			},
 			{
-				"key": "key",
-				"value": "x-gateway-apikey",
+				"key": "username",
+				"value": "{{userName}}",
 				"type": "string"
 			}
 		]
