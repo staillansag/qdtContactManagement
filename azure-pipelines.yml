@@ -90,7 +90,7 @@ stages:
       displayName: 'Stop and remove the existing MSR container'
 
     - script: |
-        docker run --no-cache -d --name msr-contact-management \
+        docker run -d --name msr-contact-management \
           --network sag \
           -p 5555:5555 \
           -v $(MSRLicense.secureFilePath):/opt/softwareag/IntegrationServer/config/licenseKey.xml:ro \
