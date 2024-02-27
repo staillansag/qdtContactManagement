@@ -1,4 +1,4 @@
-FROM staillansag/webmethods-microservicesruntime:10.15-qdt
+FROM staillansag/webmethods-microservicesruntime:10.15-qdt-wpm
 
 # Our repo contains the qdtContactManagement package, so we copy its content to the image
 ADD --chown=sagadmin . /opt/softwareag/IntegrationServer/packages/qdtContactManagement

@@ -1,5 +1,6 @@
 *.bak
-.env
+
+*-license.xml
 
 /.classpath
 /.project

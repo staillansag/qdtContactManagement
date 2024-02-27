@@ -1,0 +1,119 @@
+pool:
+  name: Default
+
+variables:
+  - group: qdt.contact.management.variables
+ 
+stages:
+
+- stage: Build
+
+  jobs:
+
+  - job: BuildImage
+
+    variables:
+    - name: MAJOR
+      value: $[variables['IMAGE_MAJOR_VERSION']]
+    - name: MINOR
+      value: $[variables['IMAGE_MINOR_VERSION']]
+    - name: VERSION_PREFIX
+      value: $(IMAGE_TAG_BASE):$(MAJOR).$(MINOR)
+    - name: PATCH
+      value: $[counter(variables['VERSION_PREFIX'], 1)]
+    - name: VERSION
+      value: $(VERSION_PREFIX).$(PATCH)
+
+    steps:
+
+    - script: |
+        echo "Building ${VERSION}"
+        docker build --no-cache --build-arg GIT_TOKEN=$(GIT_TOKEN) -t "${VERSION}" . || exit 1
+      displayName: "Build new image"
+      env:
+        GIT_TOKEN: $(GIT_TOKEN)
+
+    - script: |
+        echo "Tagging ${IMAGE_TAG_BASE}:latest"
+        docker tag "${VERSION}" "${IMAGE_TAG_BASE}:latest" || exit 1
+      displayName: "Apply latest tag to new image"
+
+    - script: |
+        docker login -u "${DOCKER_REGISTRY_ID}" -p "${DOCKER_REGISTRY_SECRET}" "${DOCKER_REGISTRY_URI}" || exit 1
+      displayName: 'Login to image registry'
+      env:
+        DOCKER_REGISTRY_SECRET: $(DOCKER_REGISTRY_SECRET)
+
+    - script: |
+        docker push "${VERSION}" || exit 1
+      displayName: 'Push new image'
+
+    - script: |
+        docker push "${IMAGE_TAG_BASE}:latest" || exit 1
+      displayName: 'Push new image (latest)'
+
+
+- stage: DockerDeploy
+  dependsOn: Build
+
+  jobs:
+
+  - job: DockerCompose
+
+    steps:
+
+    - script: |
+        cd ./resources/docker-compose
+        docker-compose down || exit 1
+      displayName: 'Stop the docker compose stack'
+
+    - script: |
+        docker-compose up -d || exit 1
+      displayName: 'Fetch sandbox resource group'
+
+    - script: |
+        url="http://localhost:5555"
+        max_wait=120
+        elapsed_time=0
+        interval=5
+
+        while true; do
+            http_status=$(curl -o /dev/null -s -w "%{http_code}\n" $url)
+
+            if [ "$http_status" -eq 200 ]; then
+                exit 0
+            else
+                echo "MSR not ready, trying again in $interval seconds..."
+            fi
+
+            sleep $interval
+            ((elapsed_time+=interval))
+
+            if [ "$elapsed_time" -ge "$max_wait" ]; then
+                echo "Error. MSR not ready after $max_wait seconds."
+                exit 1
+            fi
+        done
+      displayName: 'Wait for MSR to be deployed'
+
+    - script: |
+        health_json=$(curl -s http://localhost:5555/health)
+        if [ -z "${health_json}" ]; then
+          echo "Empty response to http://localhost:5555/health" && exit 1
+        else
+          echo "Health status for MSR container"
+          echo ${health_json}
+        fi
+        status_checks=$(echo "$health_json" | jq '. | .. | .status? // empty | select(. != "UP")')
+        if [[ -n "$status_checks" ]]; then
+          echo "Error: One or more resources in MSR container are not 'UP'" && exit 1
+        fi
+        jdbc_state_checks=$(echo "$health_json" | jq '.Adapters.JDBCAdapter.Connections[] | select(.state == "suspended")')
+        if [[ -n "$jdbc_state_checks" ]]; then
+          echo "Error: One or more JDBC Adapter connections in MSR container are suspended"
+          exit 1
+        fi
+      displayName: 'Check health of MSR container'
+
+
+  
