@@ -285,7 +285,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/contacts?firstName={{firstName}}&lastName={{lastName}}",
+							"raw": "{{url}}/contacts?firstName={{firstName}}&lastName={{lastName}}&lastUpdateAfter={{startDateTime}}",
 							"host": [
 								"{{url}}"
 							],
@@ -300,6 +300,10 @@
 								{
 									"key": "lastName",
 									"value": "{{lastName}}"
+								},
+								{
+									"key": "lastUpdateAfter",
+									"value": "{{startDateTime}}"
 								}
 							]
 						}

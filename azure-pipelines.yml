@@ -161,3 +161,4 @@ stages:
           --env-var "rootUrl=http://msr-contact-management:5555" \
           --env-var "msrUserName=Administrator" \
           --env-var "msrPassword=manage"
+      displayName: 'Run Postman test collection'
