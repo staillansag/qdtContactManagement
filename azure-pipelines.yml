@@ -62,6 +62,24 @@ stages:
 
     steps:
 
+    - task: DownloadSecureFile@1
+      name: MSRLicense
+      displayName: 'Download MSR License'
+      inputs:
+        secureFile: 'msr-license.xml'
+
+    - task: DownloadSecureFile@1
+      name: UMLicense
+      displayName: 'Download MSR License'
+      inputs:
+        secureFile: 'um-license.xml'
+
+    - script: |
+        mkdir -p ./resources/docker-compose/licenses
+        cp $(MSRLicense.secureFilePath) ./resources/docker-compose/licenses/msr-license.xml
+        cp $(UMLicense.secureFilePath) ./resources/docker-compose/licenses/um-license.xml
+      displayName: 'Copy the license files'
+
     - script: |
         cd ./resources/docker-compose
         docker compose down || exit 1
