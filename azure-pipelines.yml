@@ -127,9 +127,9 @@ stages:
       displayName: 'Wait for MSR to be deployed'
 
     - script: |
-        health_json=$(curl -s http://localhost:5555/health)
+        health_json=$(curl -s http://msr-contact-management:5555/health)
         if [ -z "${health_json}" ]; then
-          echo "Empty response to http://localhost:5555/health" && exit 1
+          echo "Empty response to http://msr-contact-management:5555/health" && exit 1
         else
           echo "Health status for MSR container"
           echo ${health_json}
