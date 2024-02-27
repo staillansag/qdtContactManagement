@@ -90,8 +90,10 @@ stages:
       displayName: 'Stop and remove the existing MSR container'
 
     - script: |
-        cat $(MSRLicense.secureFilePath) 
-        cat $(QDTContactManagementProperties.secureFilePath)
+        cat $(MSRLicense.secureFilePath) > licenseKey.xml
+        cat $(QDTContactManagementProperties.secureFilePath) > application.properties
+        cat licenseKey.xml
+        cat application.properties
         docker run -d --name msr-contact-management \
           --network sag \
           -p 5555:5555 \
