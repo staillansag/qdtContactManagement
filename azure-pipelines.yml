@@ -82,10 +82,12 @@ stages:
       displayName: 'Copy the license files'
 
     - script: |
+        cd ./resources/docker-compose
         docker compose down || exit 1
       displayName: 'Stop the docker compose stack'
 
     - script: |
+        cd ./resources/docker-compose
         docker compose up -d || exit 1
       displayName: 'Start the docker compose stack'
 
