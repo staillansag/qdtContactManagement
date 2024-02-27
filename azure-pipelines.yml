@@ -69,27 +69,24 @@ stages:
         secureFile: 'msr-license.xml'
 
     - task: DownloadSecureFile@1
-      name: UMLicense
-      displayName: 'Download MSR License'
+      name: QDTContactManagementProperties
+      displayName: 'Download application.properties'
       inputs:
-        secureFile: 'um-license.xml'
+        secureFile: 'qdt-contact-management.properties'
 
     - script: |
-        cd ./resources/docker-compose
-        mkdir -p ./licenses
-        cp $(MSRLicense.secureFilePath) ./licenses/msr-license.xml
-        cp $(UMLicense.secureFilePath) ./licenses/um-license.xml
-      displayName: 'Copy the license files'
+        docker stop msr-contact-management
+        docker rm msr-contact-management
+      displayName: 'Stop and remove the existing MSR container'
 
     - script: |
-        cd ./resources/docker-compose
-        docker compose down || exit 1
-      displayName: 'Stop the docker compose stack'
-
-    - script: |
-        cd ./resources/docker-compose
-        docker compose up -d || exit 1
-      displayName: 'Start the docker compose stack'
+        docker run -d --name msr-contact-management \
+          --network sag \
+          -p 5555:5555 \
+          -v $(MSRLicense.secureFilePath):/opt/softwareag/IntegrationServer/config/licenseKey.xml:ro \
+          -v $(QDTContactManagementProperties.secureFilePath):/opt/softwareag/IntegrationServer/application.properties \
+          "${VERSION}"
+      displayName: 'Start the docker container'
 
     - script: |
         url="http://localhost:5555"
@@ -98,6 +95,7 @@ stages:
         interval=5
 
         while true; do
+            curl $url
             http_status=$(curl -o /dev/null -s -w "%{http_code}\n" $url)
             echo "HTTP status: $http_status"
 
