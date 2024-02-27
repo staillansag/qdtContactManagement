@@ -75,8 +75,18 @@ stages:
         secureFile: 'qdt-contact-management.properties'
 
     - script: |
-        docker stop msr-contact-management
-        docker rm msr-contact-management
+        # Check if the container exists
+        if docker ps -a | grep -q msr-contact-management; then
+            echo "Container msr-contact-management exists, stopping and removing it..."
+            # Stop the container
+            docker stop msr-contact-management
+            # Remove the container
+            docker rm msr-contact-management
+            echo "Container msr-contact-management has been stopped and removed."
+        else
+            echo "Container msr-contact-management does not exist, no action needed."
+        fi
+
       displayName: 'Stop and remove the existing MSR container'
 
     - script: |
