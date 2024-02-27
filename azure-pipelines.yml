@@ -173,8 +173,8 @@ stages:
     steps:
 
     - script: |
-        curl --location --globoff 'https://env674214.apigw-aw-eu.webmethods.io/rest/apigateway/archive?fixingMissingVersions=false&overwrite=*' \
+        curl -v --location 'https://env674214.apigw-aw-eu.webmethods.io/rest/apigateway/archive?fixingMissingVersions=false&overwrite=*' \
           --header 'accept: application/json' \
-          --header 'Authorization: Basic e3ttc3JVc2VyTmFtZX19Ont7bXNyUGFzc3dvcmR9fQ==' \
-          --form 'zipFile=@"./resources/apim/ContactManagementAPI.zip"'
+          --header 'Authorization: Basic cWR0LXRlc3RAc3R0bGFiLmZyOnF1YWRpZW50LTIwMjQtVHJpYWw=' \
+          --form 'zipFile=@'"$PWD/resources/apim/ContactManagementAPI.zip"
       displayName: 'Deploy the API proxy'
