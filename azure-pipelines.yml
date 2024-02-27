@@ -90,15 +90,13 @@ stages:
       displayName: 'Stop and remove the existing MSR container'
 
     - script: |
-        echo $(MSRLicense.secureFilePath)
-        echo $(QDTContactManagementProperties.secureFilePath)
-        chmod 644 $(MSRLicense.secureFilePath)
-        chmod 644 $(QDTContactManagementProperties.secureFilePath)
+        cp $(MSRLicense.secureFilePath) /tmp/licenseKey.xml
+        cp $(QDTContactManagementProperties.secureFilePath) /tmp/application.properties
         docker run -d --name msr-contact-management \
           --network sag \
           -p 5555:5555 \
-          -v $(MSRLicense.secureFilePath):/opt/softwareag/IntegrationServer/config/licenseKey.xml:ro \
-          -v $(QDTContactManagementProperties.secureFilePath):/opt/softwareag/IntegrationServer/application.properties:ro \
+          -v /tmp/licenseKey.xml:/opt/softwareag/IntegrationServer/config/licenseKey.xml:ro \
+          -v /tmp/application.properties:/opt/softwareag/IntegrationServer/application.properties:ro \
           staillansag/qdt-contact-management:latest
       displayName: 'Start the docker container'
 
