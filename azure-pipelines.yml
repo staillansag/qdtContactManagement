@@ -64,11 +64,11 @@ stages:
 
     - script: |
         cd ./resources/docker-compose
-        docker-compose down || exit 1
+        docker compose down || exit 1
       displayName: 'Stop the docker compose stack'
 
     - script: |
-        docker-compose up -d || exit 1
+        docker compose up -d || exit 1
       displayName: 'Fetch sandbox resource group'
 
     - script: |
