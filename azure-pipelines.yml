@@ -75,18 +75,17 @@ stages:
         secureFile: 'um-license.xml'
 
     - script: |
-        mkdir -p ./resources/docker-compose/licenses
-        cp $(MSRLicense.secureFilePath) ./resources/docker-compose/licenses/msr-license.xml
-        cp $(UMLicense.secureFilePath) ./resources/docker-compose/licenses/um-license.xml
+        cd ./resources/docker-compose
+        mkdir -p ./licenses
+        cp $(MSRLicense.secureFilePath) ./licenses/msr-license.xml
+        cp $(UMLicense.secureFilePath) ./licenses/um-license.xml
       displayName: 'Copy the license files'
 
-    # - script: |
-    #     cd ./resources/docker-compose
-    #     docker compose down || exit 1
-    #   displayName: 'Stop the docker compose stack'
+    - script: |
+        docker compose down || exit 1
+      displayName: 'Stop the docker compose stack'
 
     - script: |
-        cd ./resources/docker-compose
         docker compose up -d || exit 1
       displayName: 'Start the docker compose stack'
 
