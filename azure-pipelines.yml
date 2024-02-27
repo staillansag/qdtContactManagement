@@ -27,11 +27,6 @@ stages:
     steps:
 
     - script: |
-        echo "##vso[task.setvariable variable=IMAGE_NAME;isOutput=true]${VERSION}"
-      name: setImageName
-      displayName: "Saving new image name"
-
-    - script: |
         echo "Building ${VERSION}"
         docker build --no-cache --build-arg GIT_TOKEN=$(GIT_TOKEN) -t "${VERSION}" . || exit 1
       displayName: "Build new image"
@@ -60,8 +55,6 @@ stages:
 
 - stage: DockerDeploy
   dependsOn: Build
-  variables:
-    IMAGE_NAME: $[ dependencies.BuildImage.outputs['setImageName.IMAGE_NAME'] ]
 
   jobs:
 
@@ -97,13 +90,12 @@ stages:
       displayName: 'Stop and remove the existing MSR container'
 
     - script: |
-        echo "$(IMAGE_NAME)"
-        docker run -d --name msr-contact-management \
+        docker run --no-cache -d --name msr-contact-management \
           --network sag \
           -p 5555:5555 \
           -v $(MSRLicense.secureFilePath):/opt/softwareag/IntegrationServer/config/licenseKey.xml:ro \
           -v $(QDTContactManagementProperties.secureFilePath):/opt/softwareag/IntegrationServer/application.properties \
-          $(IMAGE_NAME)
+          staillansag/qdt-contact-management:latest
       displayName: 'Start the docker container'
 
     - script: |
