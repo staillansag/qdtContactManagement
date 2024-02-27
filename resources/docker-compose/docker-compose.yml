@@ -25,7 +25,7 @@ services:
     volumes:
       - um-data-volume:/opt/softwareag/UniversalMessaging/server/umserver/data
       - um-conf-volume:/opt/softwareag/common/conf
-      - ./licenses/um-license.xml:/opt/softwareag/UniversalMessaging/server/umserver/licence/licence.xml:ro
+      - /licenses/licenses/um-license.xml:/opt/softwareag/UniversalMessaging/server/umserver/licence/licence.xml:ro
     healthcheck:
       interval: 5s
       retries: 12
@@ -43,7 +43,7 @@ services:
       - "5555:5555"
       - "5543:5543"
     volumes:
-      - ./licenses/msr-license.xml:/opt/softwareag/IntegrationServer/config/licenseKey.xml:ro
+      - /licenses/msr-license.xml:/opt/softwareag/IntegrationServer/config/licenseKey.xml:ro
       - ./application.properties:/opt/softwareag/IntegrationServer/application.properties
     env_file:
       - .env
