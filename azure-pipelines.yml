@@ -151,14 +151,14 @@ stages:
 
   jobs:
 
-  - job: RunTestCollection
+  - job: RunMSRTests
 
     steps:
 
     - script: |
         cd ./resources/tests
-        newman run ContactManagementAutomated.postman_collection.json -e ContactManagementMSR.postman_environment.json \
-          --env-var "rootUrl=http://msr-contact-management:5555" \
-          --env-var "msrUserName=Administrator" \
-          --env-var "msrPassword=manage"
-      displayName: 'Run Postman test collection'
+        newman run ContactManagementAutomated.postman_collection.json -e ContactManagement.postman_environment.json \
+          --env-var "url=http://msr-contact-management:5555/rad/qdtContactManagement.api:ContactManagementAPI" \
+          --env-var "userName=Administrator" \
+          --env-var "password=manage"
+      displayName: 'Test API exposed by MSR'
