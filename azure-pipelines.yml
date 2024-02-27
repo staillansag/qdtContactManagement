@@ -173,9 +173,7 @@ stages:
     steps:
 
     - script: |
-        response_json=$(curl -s --location "${TEST_API_GATEWAY_URL}/rest/apigateway/archive?fixingMissingVersions=false&overwrite=*" \
-          --header 'accept: application/json' \
-          -u ${TEST_API_GATEWAY_USERNAME}:${TEST_API_GATEWAY_PASSWORD} \
-          --form "zipFile=@./resources/apim/ContactManagementAPI.zip")
+        ls -l ./resources/apim/ContactManagementAPI.zip
+        response_json=$(curl -s --location "${TEST_API_GATEWAY_URL}/rest/apigateway/archive?fixingMissingVersions=false&overwrite=*" --header 'accept: application/json' -u ${TEST_API_GATEWAY_USERNAME}:${TEST_API_GATEWAY_PASSWORD} --form "zipFile=@./resources/apim/ContactManagementAPI.zip")
         echo "Response: $response_json"
       displayName: 'Deploy the API proxy'
