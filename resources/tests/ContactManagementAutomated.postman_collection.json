@@ -2276,7 +2276,16 @@
 			"script": {
 				"type": "text/javascript",
 				"exec": [
-					"pm.request.headers.upsert({key: 'Accept', value: 'application/json'});"
+					"pm.request.headers.upsert({key: 'Accept', value: 'application/json'});",
+					"",
+					"let apiKey = pm.environment.get(\"apiKey\");",
+					"",
+					"if(apiKey) {",
+					"    pm.request.headers.add({",
+					"        key: 'x-gateway-apikey',",
+					"        value: apiKey",
+					"    });",
+					"} "
 				]
 			}
 		},

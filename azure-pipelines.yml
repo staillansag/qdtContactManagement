@@ -146,7 +146,7 @@ stages:
         fi
       displayName: 'Check health of MSR container'
 
-- stage: Test
+- stage: MSRTests
   dependsOn: DockerDeploy
 
   jobs:
@@ -162,3 +162,19 @@ stages:
           --env-var "userName=Administrator" \
           --env-var "password=manage"
       displayName: 'Test API exposed by MSR'
+
+- stage: APIProxyDeploy
+  dependsOn: MSRTests
+
+  jobs:
+
+  - job: DeployAPIProxy
+
+    steps:
+
+    - script: |
+        curl --location --globoff 'https://env674214.apigw-aw-eu.webmethods.io/rest/apigateway/archive?fixingMissingVersions=false&overwrite=*' \
+          --header 'accept: application/json' \
+          --header 'Authorization: Basic e3ttc3JVc2VyTmFtZX19Ont7bXNyUGFzc3dvcmR9fQ==' \
+          --form 'zipFile=@"./resources/apim/ContactManagementAPI.zip"'
+      displayName: 'Deploy the API proxy'
