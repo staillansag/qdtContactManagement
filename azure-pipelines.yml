@@ -78,6 +78,7 @@ stages:
         mkdir -p ./resources/docker-compose/licenses
         cp $(MSRLicense.secureFilePath) ./resources/docker-compose/licenses/msr-license.xml
         cp $(UMLicense.secureFilePath) ./resources/docker-compose/licenses/um-license.xml
+        find . -ls
       displayName: 'Copy the license files'
 
     - script: |
