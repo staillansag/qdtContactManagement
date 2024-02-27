@@ -97,8 +97,8 @@ stages:
         docker run -d --name msr-contact-management \
           --network sag \
           -p 5555:5555 \
-          -v /tmp/licenseKey.xml:/opt/softwareag/IntegrationServer/config/licenseKey.xml:ro \
-          -v /tmp/application.properties:/opt/softwareag/IntegrationServer/application.properties:ro \
+          -v ./licenseKey.xml:/opt/softwareag/IntegrationServer/config/licenseKey.xml:ro \
+          -v ./application.properties:/opt/softwareag/IntegrationServer/application.properties:ro \
           staillansag/qdt-contact-management:latest
       displayName: 'Start the docker container'
 
