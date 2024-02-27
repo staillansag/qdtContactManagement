@@ -90,6 +90,7 @@ stages:
       displayName: 'Stop and remove the existing MSR container'
 
     - script: |
+        echo "${VERSION}"
         docker run -d --name msr-contact-management \
           --network sag \
           -p 5555:5555 \
