@@ -100,13 +100,13 @@ stages:
       displayName: 'Start the docker container'
 
     - script: |
-        url="http://localhost:5555"
+        # My Azure Pipelines agents runs in Docker, so I need to connect to the container using the docker network
+        url="http://msr-contact-management:5555"
         max_wait=120
         elapsed_time=0
         interval=5
 
         while true; do
-            curl $url
             http_status=$(curl -o /dev/null -s -w "%{http_code}\n" $url)
             echo "HTTP status: $http_status"
 
