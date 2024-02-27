@@ -90,6 +90,7 @@ stages:
       displayName: 'Stop and remove the existing MSR container'
 
     - script: |
+        # My Azure Pipelines agents runs in Docker, so I cannot mount Azure Pipelines secure files in the MSR container
         cat /home/DAEDMZ/stai/cicd/licenseKey.xml
         docker run -d --name msr-contact-management \
           --network sag \
@@ -145,5 +146,18 @@ stages:
         fi
       displayName: 'Check health of MSR container'
 
+- stage: Test
+  dependsOn: DockerDeploy
 
-  
+  jobs:
+
+  - job: RunTestCollection
+
+    steps:
+
+    - script: |
+        cd ./resources/tests
+        newman run ContactManagement.postman_collection.json -e ContactManagementMSR.postman_environment.json \
+          --env-var "rootUrl=http://msr-contact-management:5555" \
+          --env-var "msrUserName=Administrator" \
+          --env-var "msrPassword=manage"
