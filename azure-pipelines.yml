@@ -173,8 +173,9 @@ stages:
     steps:
 
     - script: |
-        curl -v --location 'https://env674214.apigw-aw-eu.webmethods.io/rest/apigateway/archive?fixingMissingVersions=false&overwrite=*' \
+        response_json=$(curl -s --location "${TEST_API_GATEWAY_URL}/rest/apigateway/archive?fixingMissingVersions=false&overwrite=*"" \
           --header 'accept: application/json' \
-          --header 'Authorization: Basic cWR0LXRlc3RAc3R0bGFiLmZyOnF1YWRpZW50LTIwMjQtVHJpYWw=' \
-          --form 'zipFile=@'"$PWD/resources/apim/ContactManagementAPI.zip"
+          -u ${TEST_API_GATEWAY_USERNAME}:${TEST_API_GATEWAY_PASSWORD} \
+          --form 'zipFile=@'"$PWD/resources/apim/ContactManagementAPI.zip")
+        echo "Response: $response_json"
       displayName: 'Deploy the API proxy'
