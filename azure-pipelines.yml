@@ -160,8 +160,10 @@ stages:
         newman run ContactManagementAutomated.postman_collection.json -e ContactManagement.postman_environment.json \
           --env-var "url=http://msr-contact-management:5555/rad/qdtContactManagement.api:ContactManagementAPI" \
           --env-var "userName=Administrator" \
-          --env-var "password=manage"
+          --env-var "password=${MSR_ADMIN_PASSWORD}"
       displayName: 'Test API exposed by MSR'
+      env:
+        MSR_ADMIN_PASSWORD: $(MSR_ADMIN_PASSWORD)
 
 - stage: APIProxyDeploy
   dependsOn: MSRTests
@@ -189,3 +191,21 @@ stages:
       displayName: 'Deploy the API proxy'
       env:
         TEST_API_GATEWAY_PASSWORD: $(TEST_API_GATEWAY_PASSWORD)
+
+- stage: GatewayTests
+  dependsOn: APIProxyDeploy
+
+  jobs:
+
+  - job: RunGatewayTests
+
+    steps:
+
+    - script: |
+        cd ./resources/tests
+        newman run ContactManagementAutomated.postman_collection.json -e ContactManagement.postman_environment.json \
+          --env-var "url=${TEST_API_GATEWAY_URL}/gateway/ContactManagementAPI/1.0.0" \
+          --env-var "apiKey=${TEST_API_GATEWAY_API_KEY}" \
+      displayName: 'Test API exposed by the gateway'
+      env:
+        TEST_API_GATEWAY_API_KEY: $(TEST_API_GATEWAY_API_KEY)
