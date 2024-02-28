@@ -1,8 +1,7 @@
 openapi: 3.0.0
 info:
   title: Contacts and Contact Roles API
-  description: "API for managing contacts and their roles in accounts, with address\
-    \ details."
+  description: An API for managing contacts and their roles in accounts.
   version: "1.0"
 servers:
 - url: /
@@ -385,7 +384,7 @@ paths:
         explode: true
         schema:
           maxLength: 18
-          minLength: 18
+          minLength: 15
           type: string
         example: 0017Q000009ZWn6QAG
       - name: role
@@ -790,7 +789,7 @@ components:
           example: cc01d7c2-aa54-4504-8b98-28bd730d51d8
         accountId:
           maxLength: 18
-          minLength: 18
+          minLength: 15
           type: string
           description: The ID of the account associated with the contact.
           example: 0017Q000009ZWn6QAG

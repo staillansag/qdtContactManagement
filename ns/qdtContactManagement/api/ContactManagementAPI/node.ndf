@@ -11,7 +11,7 @@
   <Boolean name="modifiable">true</Boolean>
   <value name="version">3.0.0</value>
   <record name="info" javaclass="com.wm.util.Values">
-    <value name="description">API for managing contacts and their roles in accounts, with address details.</value>
+    <value name="description">An API for managing contacts and their roles in accounts.</value>
     <value name="title">Contacts and Contact Roles API</value>
     <null name="termsOfService"/>
     <value name="version">1.0</value>

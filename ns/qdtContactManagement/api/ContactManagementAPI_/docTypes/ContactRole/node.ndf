@@ -165,7 +165,7 @@
             </record>
             <record name="minLength" javaclass="com.wm.util.Values">
               <value name="key">minLength</value>
-              <number name="value" type="Integer">18</number>
+              <number name="value" type="Integer">15</number>
               <value name="type">STRING</value>
             </record>
             <record name="extendedProperties" javaclass="com.wm.util.Values">

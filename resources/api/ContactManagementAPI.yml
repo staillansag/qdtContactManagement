@@ -343,7 +343,7 @@ paths:
           description: Filter by account ID
           schema:
             type: string
-            minLength: 18
+            minLength: 15
             maxLength: 18
           example: "0017Q000009ZWn6QAG"
         - name: role
@@ -732,7 +732,7 @@ components:
           example: "cc01d7c2-aa54-4504-8b98-28bd730d51d8"
         accountId:
           type: string
-          minLength: 18
+          minLength: 15
           maxLength: 18
           description: The ID of the account associated with the contact.
           example: "0017Q000009ZWn6QAG"
