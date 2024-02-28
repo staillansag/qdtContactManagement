@@ -174,7 +174,7 @@ stages:
 
     - script: |
         json=$(curl -s --location "${TEST_API_GATEWAY_URL}/rest/apigateway/archive?fixingMissingVersions=false&overwrite=*" --header 'accept: application/json' -u ${TEST_API_GATEWAY_USERNAME}:${TEST_API_GATEWAY_PASSWORD} --form "zipFile=@./resources/apim/ContactManagementAPI.zip")
-        statusCheck=$(echo "$json" | jq 'all(.ArchiveResult[].[] | .status == "Success")')
+        statusCheck=$(echo "$json" | 'all(.ArchiveResult[] | .[] | .status == "Success")')
 
         if [ "$statusCheck" = "true" ]; then
           echo "Import successful"
