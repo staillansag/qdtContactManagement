@@ -205,7 +205,7 @@ stages:
         cd ./resources/tests
         newman run ContactManagementAutomated.postman_collection.json -e ContactManagement.postman_environment.json \
           --env-var "url=${TEST_API_GATEWAY_URL}/gateway/ContactManagementAPI/1.0.0" \
-          --env-var "apiKey=${TEST_API_GATEWAY_API_KEY}" \
+          --env-var "apiKey=${TEST_API_GATEWAY_API_KEY}" 
       displayName: 'Test API exposed by the gateway'
       env:
         TEST_API_GATEWAY_API_KEY: $(TEST_API_GATEWAY_API_KEY)
