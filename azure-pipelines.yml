@@ -175,12 +175,12 @@ stages:
     - script: |
         json=$(curl -s --location "${TEST_API_GATEWAY_URL}/rest/apigateway/archive?fixingMissingVersions=false&overwrite=*" --header 'accept: application/json' -u ${TEST_API_GATEWAY_USERNAME}:${TEST_API_GATEWAY_PASSWORD} --form "zipFile=@./resources/apim/ContactManagementAPI.zip")
         failed_count=$(echo $json | jq '.ArchiveResult[] | .[] | .status' | grep -v '"Success"' | wc -l)
+        echo "Response: $json"
 
         if [ "$failed_count" -eq 0 ]; then
           echo "Import successful"
         else
           echo "Import failed"
-          echo "Response: $json"
           exit 1
         fi
       displayName: 'Deploy the API proxy'
