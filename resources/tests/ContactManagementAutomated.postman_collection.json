@@ -956,6 +956,57 @@
 					"name": "createContact",
 					"item": [
 						{
+							"name": "No credentials",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.request.headers.remove(\"x-gateway-apikey\");"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 401\", function () {",
+											"    pm.response.to.have.status(401);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"salutation\": \"Mr\",\n    \"lastName\": \"Doe\",\n    \"firstName\": \"John\",\n    \"middleName\": \"Robert\",\n    \"birthDate\": \"1997-12-15\",\n    \"email\": \"john.doe@example.com\",\n    \"phoneNumber\": \"123-456-7890\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/contacts",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"contacts"
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "Missing lastName",
 							"event": [
 								{
@@ -1297,6 +1348,55 @@
 					"name": "getContact",
 					"item": [
 						{
+							"name": "No credentials",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.request.headers.remove(\"x-gateway-apikey\");"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 401\", function () {",
+											"    pm.response.to.have.status(401);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/contacts/:contactId",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"contacts",
+										":contactId"
+									],
+									"variable": [
+										{
+											"key": "contactId",
+											"value": "b8b13648-ac2a-4c5b-b1f4-06d476e2e6a2"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "Not found",
 							"event": [
 								{
@@ -1347,6 +1447,55 @@
 				{
 					"name": "listContacts",
 					"item": [
+						{
+							"name": "No credentials",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.request.headers.remove(\"x-gateway-apikey\");"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 401\", function () {",
+											"    pm.response.to.have.status(401);",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/contacts?limit=-1",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"contacts"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "-1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
 						{
 							"name": "Invalid limit",
 							"event": [
