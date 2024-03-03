@@ -8,11 +8,13 @@ services:
       - sag
     ports:
       - "5432:5432"
+    env_file:
+      - .env
     environment:
-      - POSTGRES_PASSWORD=Password123@
-      - POSTGRES_USER=postgres
+      - POSTGRES_USER=${DB_USER_NAME}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
     volumes:
-      - postgres-volume:/var/lib/postgresql/data
+      - postgres-vol:/var/lib/postgresql/data
 
   umserver:
     image: softwareag/universalmessaging-server:10.15
@@ -22,9 +24,11 @@ services:
     ports:
       - "9000:9000"
       - "9200:9200"
+    env_file:
+      - .env
     volumes:
-      - um-data-volume:/opt/softwareag/UniversalMessaging/server/umserver/data
-      - um-conf-volume:/opt/softwareag/common/conf
+      - um-data-vol:/opt/softwareag/UniversalMessaging/server/umserver/data
+      - um-conf-vol:/opt/softwareag/common/conf
       - ./licenses/um-license.xml:/opt/softwareag/UniversalMessaging/server/umserver/licence/licence.xml:ro
     healthcheck:
       interval: 5s
@@ -43,7 +47,7 @@ services:
       - "5555:5555"
       - "5543:5543"
     volumes:
-      - ./licenses/msr-license.xml:/opt/softwareag/IntegrationServer/config/licenseKey.xml:ro
+      - ./license/msr-license.xml:/opt/softwareag/IntegrationServer/config/licenseKey.xml:ro
       - ./application.properties:/opt/softwareag/IntegrationServer/application.properties
     env_file:
       - .env
@@ -56,6 +60,6 @@ networks:
   sag:
 
 volumes:
-  postgres-volume:
-  um-data-volume:
-  um-conf-volume:
+  postgres-vol:
+  um-data-vol:
+  um-conf-vol:
