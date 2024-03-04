@@ -29,7 +29,7 @@ services:
     volumes:
       - um-data-vol:/opt/softwareag/UniversalMessaging/server/umserver/data
       - um-conf-vol:/opt/softwareag/common/conf
-      - ./licenses/um-license.xml:/opt/softwareag/UniversalMessaging/server/umserver/licence/licence.xml:ro
+      - ./license/um-license.xml:/opt/softwareag/UniversalMessaging/server/umserver/licence/licence.xml:ro
     healthcheck:
       interval: 5s
       retries: 12
