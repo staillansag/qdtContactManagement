@@ -87,7 +87,7 @@ The MSR works together with an application.properties file that is injected into
 This properties file contains the information items required to connect to the database and the Universal Messaging realm. It also contains some configuration elements like the Administrator user's password.  
 Some property values reference environment variables using the $env{ENV_VARIABLE_NAME} notation. To inject these values we use an .env file that is located next to the docker-compose.yml file. The .env file provided in the repo can be used "as is", but it goes without saying that this is only for discovery and testing.  
 
-You also need to provide license files for the MSR and the UM. These need to be placed inside ./resources/docker-compose/licenses/msr-license.xml and ./resources/docker-compose/licenses/msr-license.xml files.
+You also need to provide license files for the MSR and the UM. These need to be placed inside ./resources/docker-compose/license/msr-license.xml and ./resources/docker-compose/license/msr-license.xml files.
 
 To run the docker compose stack, place yourself under ./resources/docker-compose and execute the following command: `docker-compose up -d` (in some environments it's going to be `docker compose up -d`)  
 To check the logs of each container, use:
