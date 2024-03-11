@@ -204,3 +204,22 @@ stages:
           fi
         done
       displayName: 'Check health of pods'
+
+- stage: MSRTests
+  dependsOn: deploy
+
+  jobs:
+
+  - job: RunMSRTests
+
+    steps:
+
+    - script: |
+        cd ./resources/tests
+        newman run ContactManagementAutomated.postman_collection.json -e ContactManagement.postman_environment.json \
+          --env-var "url=https://contact-management.sttlab.eu/rad/qdtContactManagement.api:ContactManagementAPI" \
+          --env-var "userName=Administrator" \
+          --env-var "password=${MSR_ADMIN_PASSWORD}"
+      displayName: 'Test API exposed by MSR'
+      env:
+        MSR_ADMIN_PASSWORD: $(MSR_ADMIN_PASSWORD)
