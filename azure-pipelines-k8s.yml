@@ -95,6 +95,8 @@ stages:
           echo "Creating secret certificate"
         fi
 
+        env
+
         echo "kubectl create secret tls certificate \
             --key=\"${TLSPRIVATEKEY_FILE_PATH}\" \
             --cert=\"${TLSPUBLICKEY_FILE_PATH}\""
