@@ -78,12 +78,6 @@ stages:
           echo "Creating secret sagregcred"
         fi
 
-        echo "kubectl create secret docker-registry sagregcred \
-          --docker-server=${SAG_ACR_URL} \
-          --docker-username=${SAG_ACR_USERNAME} \
-          --docker-password=${SAG_ACR_PASSWORD} \
-          --docker-email=${SAG_ACR_EMAIL_ADDRESS}"
-
         kubectl create secret docker-registry sagregcred \
           --docker-server=${SAG_ACR_URL} \
           --docker-username=${SAG_ACR_USERNAME} \
@@ -91,7 +85,7 @@ stages:
           --docker-email=${SAG_ACR_EMAIL_ADDRESS}  || exit 1
       displayName: 'SAG image registry secret'
       env:
-        AZ_SP_SECRET: $(SAG_ACR_PASSWORD)
+        SAG_ACR_PASSWORD: $(SAG_ACR_PASSWORD)
 
     - script: |
         if kubectl get secret certificate &> /dev/null; then
