@@ -4,7 +4,7 @@ pool:
 variables:
   - group: qdt.contact.management.variables
   - group: aks.variables
-  - group: azure.variables
+  - group: azure.acg.variables
   - group: sag.variables
  
 stages:
