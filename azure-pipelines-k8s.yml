@@ -122,6 +122,7 @@ stages:
 
   - job: deployMicroservice
     dependsOn: initializeNamespace
+    condition: always()
 
     steps:
 
