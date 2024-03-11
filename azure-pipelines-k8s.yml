@@ -121,6 +121,7 @@ stages:
 
 
   - job: deployMicroservice
+    dependsOn: initializeNamespace
 
     steps:
 
