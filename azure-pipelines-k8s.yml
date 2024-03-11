@@ -96,12 +96,12 @@ stages:
         fi
 
         echo "kubectl create secret tls certificate \
-            --key=\"${TLS_PRIVATEKEY_FILE_PATH}\" \
-            --cert=\"${TLS_PUBLICKEY_FILE_PATH}\""
+            --key=\"${TLSPRIVATEKEY_FILE_PATH}\" \
+            --cert=\"${TLSPUBLICKEY_FILE_PATH}\""
 
         kubectl create secret tls certificate \
-            --key="${TLS_PRIVATEKEY_FILE_PATH}" \
-            --cert="${TLS_PUBLICKEY_FILE_PATH}" || exit 1
+            --key="${TLSPRIVATEKEY_FILE_PATH}" \
+            --cert="${TLSPUBLICKEY_FILE_PATH}" || exit 1
       displayName: 'TLS certificate secret'   
 
     - script: |
