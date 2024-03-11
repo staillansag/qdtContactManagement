@@ -2,10 +2,10 @@ pool:
   name: Default
 
 variables:
-  - group: qdt.contact.management.variables
   - group: aks.variables
   - group: azure.acg.variables
   - group: sag.variables
+  - group: qdt.contact.management.variables
  
 stages:
 
@@ -154,13 +154,13 @@ stages:
 
         kubectl create secret generic contact-management \
           --from-literal=MSR_ADMIN_PASSWORD=${MSR_ADMIN_PASSWORD} \
-          --from-literal=DB_USERNAME=${POSTGRES_USERNAME} \
-          --from-literal=DB_PASSWORD=${POSTGRES_PASSWORD} || exit 1
+          --from-literal=POSTGRES_USERNAME=${POSTGRES_USERNAME} \
+          --from-literal=POSTGRES_PASSWORD=${POSTGRES_PASSWORD} || exit 1
       displayName: 'Microservice secret'  
       env:
         MSR_ADMIN_PASSWORD: $(MSR_ADMIN_PASSWORD)
-        DB_USERNAME: $(DB_USERNAME)
-        DB_PASSWORD: $(DB_PASSWORD)
+        POSTGRES_USERNAME: $(POSTGRES_USERNAME)
+        POSTGRES_PASSWORD: $(POSTGRES_PASSWORD)
 
     - script: |
         kubectl apply -f ./resources/kubernetes/service.yml
