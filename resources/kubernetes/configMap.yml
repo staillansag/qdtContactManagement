@@ -23,5 +23,7 @@ data:
     settings.watt.net.default.accept=application/json
     settings.watt.server.ns.lockingMode=none
 
+    globalvariable.SERVER.value=$env{SERVER}
+
     user.Administrator.password=$secret{MSR_ADMIN_PASSWORD}
 
