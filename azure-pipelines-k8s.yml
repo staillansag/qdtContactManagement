@@ -1,0 +1,205 @@
+pool:
+  name: Default
+
+variables:
+  - group: qdt.contact.management.variables
+  - group: aks.variables
+  - group: azure.variables
+  - group: sag.variables
+ 
+stages:
+
+- stage: deploy
+
+  jobs:
+
+  - job: initializeNamespace
+    condition: eq(variables['NAMESPACE_INIT'], 'true')
+
+    steps:
+
+    - task: DownloadSecureFile@1
+      name: TLSPrivateKey
+      displayName: 'Download TLS certificate private key'
+      inputs:
+        secureFile: 'cert.key'
+
+    # Not really a secret, managed as a secret for convenience
+    - task: DownloadSecureFile@1
+      name: TLSPublicKey
+      displayName: 'Download TLS certificate public key'
+      inputs:
+        secureFile: 'cert.crt'
+
+    - task: DownloadSecureFile@1
+      name: MSRLicense
+      displayName: 'Download MSR License'
+      inputs:
+        secureFile: 'msr-license.xml'
+
+    - task: DownloadSecureFile@1
+      name: UMLicense
+      displayName: 'Download UM License'
+      inputs:
+        secureFile: 'um-license.xml'
+
+    - script: |
+        az login --service-principal -u ${AZ_SP_ID} -p ${AZ_SP_SECRET} --tenant ${AZ_TENANT_ID}
+      displayName: 'Login to Azure with service principal'
+      env:
+        AZ_SP_SECRET: $(AZ_SP_SECRET)
+
+    - script: |
+        az aks get-credentials --resource-group ${AKS_RESOURCE_GROUP} --name ${AKS_CLUSTER_NAME} --overwrite-existing
+      displayName: 'Fetch kube config'
+
+    - script: |
+        if kubectl get namespace "$NAMESPACE" > /dev/null 2>&1; then
+          echo "Namespace '$NAMESPACE' already exists."
+        else
+          echo "Namespace '$NAMESPACE' does not exist, now creating it..."
+          kubectl create namespace "$NAMESPACE"
+          if [ $? -eq 0 ]; then
+            echo "Namespace '$NAMESPACE' created."
+          else
+            echo "Creation of namespace '$NAMESPACE' failed." && exit 1
+          fi
+        fi
+
+        CURRENT_CONTEXT=$(kubectl config current-context)
+        kubectl config set-context "$CURRENT_CONTEXT" --namespace="$NAMESPACE" || exit 1
+      displayName: 'Positioning on the K8S namespace'
+
+    - script: |
+        if kubectl get secret sagregcred &> /dev/null; then
+          echo "secret sagregcred already exists, updating it..."
+          kubectl delete secret sagregcred || exit 1
+        else
+          echo "Creating secret sagregcred"
+        fi
+
+        kubectl create secret docker-registry sagregcred \
+          --docker-server=${SAG_ACR_URL} \
+          --docker-username=${SAG_ACR_USERNAME} \
+          --docker-password=${SAG_ACR_PASSWORD} \
+          --docker-email=${SAG_ACR_EMAIL_ADDRESS}  || exit 1
+      displayName: 'SAG image registry secret'
+      env:
+        AZ_SP_SECRET: $(SAG_ACR_PASSWORD)
+
+    - script: |
+        if kubectl get secret certificate &> /dev/null; then
+          echo "secret certificate already exists, updating it..."
+          kubectl delete secret certificate || exit 1
+        else
+          echo "Creating secret certificate"
+        fi
+
+        kubectl create secret tls certificate \
+            --key="${TLS_PRIVATEKEY_FILE_PATH}" \
+            --cert="${TLS_PUBLICKEY_FILE_PATH}" || exit 1
+      displayName: 'TLS certificate secret'   
+
+    - script: |
+        if kubectl get secret licenses &> /dev/null; then
+          echo "secret licenses already exists, updating it..."
+          kubectl delete secret licenses || exit 1
+        else
+          echo "Creating secret licenses"
+        fi
+
+        kubectl create secret generic licenses \
+            --from-file=msr-license=${MSR_LICENSE_FILE_PATH} \
+            --from-file=um-license=${UM_LICENSE_FILE_PATH} || exit 1
+      displayName: 'Product licenses secret'   
+
+    - script: |
+        kubectl apply -f umserver/statefulset.yaml || exit 1
+        kubectl rollout status statefulset umserver --timeout=5m || exit 1
+        kubectl apply -f umserver/service.yaml || exit 1
+      displayName: 'Install UM'   
+
+
+  - job: deployMicroservice
+
+    steps:
+
+    - script: |
+        az login --service-principal -u ${AZ_SP_ID} -p ${AZ_SP_SECRET} --tenant ${AZ_TENANT_ID}
+      displayName: 'Login to Azure with service principal'
+      env:
+        AZ_SP_SECRET: $(AZ_SP_SECRET)
+
+    - script: |
+        az aks get-credentials --resource-group ${AKS_RESOURCE_GROUP} --name ${AKS_CLUSTER_NAME} --overwrite-existing
+      displayName: 'Fetch kube config'
+
+    - script: |
+        CURRENT_CONTEXT=$(kubectl config current-context)
+        kubectl config set-context "$CURRENT_CONTEXT" --namespace="$NAMESPACE" || exit 1
+      displayName: 'Positioning on the K8S namespace'
+
+    - script: |
+        kubectl apply -f ./resources/kubernetes/configMap.yml
+      displayName: 'Apply properties config map'
+
+    - script: |
+        if kubectl get secret contact-management &> /dev/null; then
+          echo "secret contact-management already exists, updating it..."
+          kubectl delete secret contact-management || exit 1
+        else
+          echo "Microservice configMap"
+        fi
+
+        kubectl create secret generic contact-management \
+          --from-literal=MSR_ADMIN_PASSWORD=${MSR_ADMIN_PASSWORD} \
+          --from-literal=DB_USERNAME=${POSTGRES_USERNAME} \
+          --from-literal=DB_PASSWORD=${POSTGRES_PASSWORD} || exit 1
+      displayName: 'Microservice secret'  
+      env:
+        MSR_ADMIN_PASSWORD: $(MSR_ADMIN_PASSWORD)
+        DB_USERNAME: $(DB_USERNAME)
+        DB_PASSWORD: $(DB_PASSWORD)
+
+    - script: |
+        kubectl apply -f ./resources/kubernetes/service.yml
+      displayName: 'Microservice service'
+
+    - script: |
+        kubectl apply -f ./resources/kubernetes/ingress.yml
+      displayName: 'Microservice ingress'
+
+    - script: |
+        kubectl apply -f ./resources/kubernetes/hpa.yml
+      displayName: 'Microservice hpa'
+
+    - script: |
+        sed 's/MICROSERVICE_DEPLOYMENT_ID/'${BUILD_BUILDID}'/g' ./resources/kubernetes/deployment.yml | kubectl apply -f -
+      displayName: 'Microservice deployment'
+
+    - script: |
+        kubectl rollout status deployment contact-management --timeout=5m 
+      displayName: 'Wait for end of deployment'
+
+    - script: |
+        sleep 30
+        PODS=$(kubectl get pods --selector=app=contact-management -o jsonpath='{.items[*].metadata.name}')
+        for POD in $PODS; do
+          health_json=$(kubectl exec $POD --container msr -- curl -s http://localhost:5555/health)
+          if [ -z "${health_json}" ]; then
+            echo "Empty response to http://localhost:5555/health for pod ${POD}" && exit 1
+          else
+            echo "Health status for pod ${POD}"
+            echo ${health_json}
+          fi
+          status_checks=$(echo "$health_json" | jq '. | .. | .status? // empty | select(. != "UP")')
+          if [[ -n "$status_checks" ]]; then
+            echo "Error: One or more resources in $POD are not 'UP'" && exit 1
+          fi
+          jdbc_state_checks=$(echo "$health_json" | jq '.Adapters.JDBCAdapter.Connections[] | select(.state == "suspended")')
+          if [[ -n "$jdbc_state_checks" ]]; then
+            echo "Error: One or more JDBC Adapter connections in $POD are suspended"
+            exit 1
+          fi
+        done
+      displayName: 'Check health of pods'
