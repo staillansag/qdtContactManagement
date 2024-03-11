@@ -94,10 +94,6 @@ stages:
         else
           echo "Creating secret certificate"
         fi
-        
-        echo "kubectl create secret tls certificate \
-            --key=\"${TLSPRIVATEKEY_SECUREFILEPATH}\" \
-            --cert=\"${TLSPRIVATEKEY_SECUREFILEPATH}\""
 
         kubectl create secret tls certificate \
             --key="${TLSPRIVATEKEY_SECUREFILEPATH}" \
@@ -118,9 +114,9 @@ stages:
       displayName: 'Product licenses secret'   
 
     - script: |
-        kubectl apply -f umserver/statefulset.yaml || exit 1
+        kubectl apply -f ./resources/kubernetes/umserver/statefulset.yml || exit 1
         kubectl rollout status statefulset umserver --timeout=5m || exit 1
-        kubectl apply -f umserver/service.yaml || exit 1
+        kubectl apply -f ./resources/kubernetes/umserver/service.yml || exit 1
       displayName: 'Install UM'   
 
 
