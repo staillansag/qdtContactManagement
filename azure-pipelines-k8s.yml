@@ -3,7 +3,7 @@ pool:
 
 variables:
   - group: aks.variables
-  - group: azure.acg.variables
+  - group: azure.variables
   - group: sag.variables
   - group: qdt.contact.management.variables
  
