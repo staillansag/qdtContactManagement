@@ -2726,6 +2726,9 @@
 
 <MAPCOPY FROM="/selectContactOutput;2;0/results;2;1/updated_at;3.9;0" TO="/200;2;0/Contact;4;0;qdtContactManagement.api.ContactManagementAPI_.docTypes:Contact/lastUpdateDateTime;3.9;0">
 </MAPCOPY>
+
+<MAPCOPY FROM="/selectContactOutput;2;0/results;2;1/email;1;0" TO="/200;2;0/Contact;4;0;qdtContactManagement.api.ContactManagementAPI_.docTypes:Contact/email;1;0">
+</MAPCOPY>
 </MAP>
 </SEQUENCE>
 
